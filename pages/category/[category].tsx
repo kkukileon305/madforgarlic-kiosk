@@ -1,17 +1,27 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import styled from 'styled-components';
 
 const Category = () => {
-  const {
-    query: { category },
-  } = useRouter();
-
-  useEffect(() => {}, [category]);
+  const category = useRouter().query.category as string;
 
   return (
-    <div>
-      <h2>{category}</h2>
-    </div>
+    <CategoryContainer>
+      <h2>
+        {category?.charAt(0).toLocaleUpperCase()}
+        {category?.slice(1)}
+      </h2>
+    </CategoryContainer>
   );
 };
+
+const CategoryContainer = styled.div`
+  padding: 20px;
+
+  h2 {
+    font-size: 40px;
+    font-weight: bold;
+  }
+`;
+
 export default Category;

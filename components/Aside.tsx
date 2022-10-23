@@ -69,16 +69,16 @@ const Aside = () => {
         direction='vertical'
         slidesPerView={6}
         spaceBetween={20}
+        $activeNumber={categories.findIndex(category => `/category/${category.url}` === asPath) + 1}
       >
         {categories.map(category => (
-          <StyledSlide //
+          <SwiperSlide //
             key={category.title}
             onClick={() => push(`/category/${category.url}`)}
-            isActive={asPath === `/category/${category.url}`}
           >
             <category.Icon size={40} />
             <h2>{category.title}</h2>
-          </StyledSlide>
+          </SwiperSlide>
         ))}
       </StyledSwiper>
       <RedMenu>
@@ -107,31 +107,42 @@ const AsideContainer = styled.div`
   }
 `;
 
-const StyledSwiper = styled(Swiper)`
-  height: calc(100% - 256px);
-
+const StyledSwiper = styled(Swiper)<{ $activeNumber: number }>`
+  height: calc(100% - 276px);
   padding-bottom: 60px;
-`;
-
-const StyledSlide = styled(SwiperSlide)<{ isActive: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  color: ${({ isActive }) => (isActive ? 'white' : '#444444')};
-  transition: 0.3s;
   position: relative;
+  z-index: 2;
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 8px;
-    background-color: ${({ isActive }) => (isActive ? 'white' : '#222222')};
-    transition: 0.3s;
+  & > div {
+    & > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #555555;
+      transition: 0.3s;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: #222222;
+        transition: 0.3s;
+      }
+
+      &:nth-child(${({ $activeNumber }) => $activeNumber}) {
+        color: white;
+
+        &::before {
+          background-color: white;
+        }
+      }
+    }
   }
 `;
 
@@ -140,7 +151,7 @@ const RedMenu = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 180px;
+  height: 200px;
   padding: 20px;
   background-color: #222222;
   position: relative;
