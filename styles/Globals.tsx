@@ -7,6 +7,10 @@ const Globals = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+
+  main {
+    margin-left: 120px;
+  }
 `;
 
 export default Globals;
