@@ -20,9 +20,9 @@ const Home = () => {
 
   return (
     <Container>
-      <h2>Home</h2>
+      <h2>Mad For Garlic</h2>
 
-      <StyledH3>Good Dinner</StyledH3>
+      <StyledH3>오늘의 이벤트</StyledH3>
       {imageList ? (
         <StyledSwiper //
           slidesPerView={width > 650 ? 2 : 1}
@@ -63,6 +63,8 @@ const Home = () => {
           <BsArrowRightShort size={30} />
         </button>
       </StyledNavi>
+
+      <StyledH3>오늘의 신메뉴</StyledH3>
     </Container>
   );
 };

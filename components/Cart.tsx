@@ -1,34 +1,63 @@
-import { BsCart } from 'react-icons/bs';
 import styled from 'styled-components';
+import { GrClose } from 'react-icons/gr';
+import { useEffect } from 'react';
+import useUiStore from '../store/useUiStore';
 
 const Cart = () => {
+  const { setIsCartOpen } = useUiStore();
+
+  useEffect(() => {
+    const handleClose = ({ target }: MouseEvent) => {
+      if (!(target instanceof Element)) return;
+
+      if ((!target.closest('div.container') || target.closest('.close')) && !target.closest('button.cart')) {
+        setIsCartOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleClose);
+
+    return () => window.removeEventListener('click', handleClose);
+  }, []);
+
   return (
-    <FixedBtn>
-      <BsCart size={20} />
-      <h3>MY ORDER</h3>
-    </FixedBtn>
+    <Box>
+      <div className='container'>
+        <CloseBtn className='close' size={40} />
+        <h2>카트</h2>
+      </div>
+    </Box>
   );
 };
 
-const FixedBtn = styled.button`
+const Box = styled.div`
   position: fixed;
-  right: 0;
-  top: 5%;
-  border: none;
-  background-color: #c04040;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: #00000050;
+  z-index: 30;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  color: white;
-  z-index: 10;
 
-  h3 {
-    font-weight: bold;
-    font-size: 20px;
+  div.container {
+    width: 60%;
+    min-height: 400px;
+    background: white;
+    padding: 20px;
+    position: relative;
+
+    h2 {
+      font-size: 40px;
+      font-weight: bold;
+    }
   }
+`;
+
+const CloseBtn = styled(GrClose)`
+  position: absolute;
+  right: 20px;
+  top: 20px;
 `;
 
 export default Cart;

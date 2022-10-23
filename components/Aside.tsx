@@ -101,6 +101,7 @@ const AsideContainer = styled.div`
   height: 100%;
   color: white;
   font-weight: bold;
+  user-select: none;
 
   & > h2 {
     padding: 10px;
