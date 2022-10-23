@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { IconType } from 'react-icons';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const categories: { Icon: IconType; title: string; url: string }[] = [
   {
@@ -60,6 +61,14 @@ const categories: { Icon: IconType; title: string; url: string }[] = [
 
 const Aside = () => {
   const { push, asPath } = useRouter();
+  const [height, setHeight] = useState(930);
+
+  useEffect(() => {
+    const changeHeight = () => setHeight(innerHeight);
+
+    window.addEventListener('resize', changeHeight);
+    return () => window.removeEventListener('resize', changeHeight);
+  }, []);
 
   return (
     <AsideContainer>
@@ -67,7 +76,7 @@ const Aside = () => {
       <StyledSwiper
         //
         direction='vertical'
-        slidesPerView={6}
+        slidesPerView={height > 900 ? 6 : 4}
         spaceBetween={20}
         $activeNumber={categories.findIndex(category => `/category/${category.url}` === asPath) + 1}
       >
