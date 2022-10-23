@@ -6,10 +6,9 @@ import { GiPresent, GiSteak } from 'react-icons/gi';
 import { CiPizza } from 'react-icons/ci';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import { IconType } from 'react-icons';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import useResize from '../hooks/useResize';
 
 const categories: { Icon: IconType; title: string; url: string }[] = [
   {
@@ -61,14 +60,7 @@ const categories: { Icon: IconType; title: string; url: string }[] = [
 
 const Aside = () => {
   const { push, asPath } = useRouter();
-  const [height, setHeight] = useState(930);
-
-  useEffect(() => {
-    const changeHeight = () => setHeight(innerHeight);
-
-    window.addEventListener('resize', changeHeight);
-    return () => window.removeEventListener('resize', changeHeight);
-  }, []);
+  const height = useResize().innerHeight;
 
   return (
     <AsideContainer>
@@ -161,7 +153,7 @@ const RedMenu = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 200px;
-  padding: 20px;
+  padding: 10px;
   background-color: #222222;
   position: relative;
   z-index: 2;
@@ -180,7 +172,7 @@ const RedMenu = styled.div`
     border: 2px solid white;
     background-color: transparent;
     color: white;
-    height: 65px;
+    height: 80px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
 

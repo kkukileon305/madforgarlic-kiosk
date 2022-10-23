@@ -3,13 +3,21 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const Category = () => {
-  const category = useRouter().query.category as string;
+  const category = useRouter().query.category as string | undefined;
+
+  if (!category) {
+    return (
+      <CategoryContainer>
+        <h2>로딩...</h2>
+      </CategoryContainer>
+    );
+  }
 
   return (
     <CategoryContainer>
       <h2>
-        {category?.charAt(0).toLocaleUpperCase()}
-        {category?.slice(1)}
+        {category.charAt(0).toLocaleUpperCase()}
+        {category.slice(1)}
       </h2>
     </CategoryContainer>
   );
